@@ -5,6 +5,11 @@
  */
 package clienteteatro;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author iFreuk
@@ -14,8 +19,10 @@ public class Bloques extends javax.swing.JFrame {
     /**
      * Creates new form Bloques
      */
-    public Bloques() {
+    public Bloques(String ObraName, String Teatro) {
         initComponents();
+        Titulo.setText(ObraName);
+        CargaBloques(ObraName, Teatro);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
@@ -30,7 +37,7 @@ public class Bloques extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        TablaBloques = new javax.swing.JTable();
         Titulo = new javax.swing.JLabel();
         Comprar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
@@ -38,15 +45,15 @@ public class Bloques extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        TablaBloques.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Fecha", "Bloque", "Precio"
+                "Fecha                  Hora                            ", "Bloque", "Precio"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(TablaBloques);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 700, 430));
 
@@ -78,7 +85,7 @@ public class Bloques extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[], String ObraName, String Teatro) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -105,16 +112,25 @@ public class Bloques extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Bloques().setVisible(true);
+                new Bloques(ObraName, Teatro).setVisible(true);
             }
         });
+    }
+    public void CargaBloques(String ObraName, String Teatro){
+    DefaultTableModel modelo = (DefaultTableModel) TablaBloques.getModel();
+        try {
+            ClienteTeatro.VerPresentaciones(ObraName, Teatro, modelo);
+        } catch (SQLException ex) {
+            Logger.getLogger(Cartelera.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Comprar;
+    private javax.swing.JTable TablaBloques;
     private javax.swing.JLabel Titulo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

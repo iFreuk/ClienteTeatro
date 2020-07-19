@@ -46,6 +46,7 @@ public class Cartelera extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         BotonConfirmar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Boleteria");
@@ -114,12 +115,28 @@ public class Cartelera extends javax.swing.JFrame {
                 BotonConfirmarActionPerformed(evt);
             }
         });
-        getContentPane().add(BotonConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 150, -1, -1));
+        getContentPane().add(BotonConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 420, -1, -1));
+
+        jButton1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jButton1.setText("Refrescar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 110, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void BotonConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonConfirmarActionPerformed
+        int pos = TablaCartelera.getSelectedRow();
+        String NombreObra = TablaCartelera.getValueAt(pos, 0).toString();
+        String Teatro = TablaCartelera.getValueAt(pos, 1).toString();
+        new Bloques(NombreObra, Teatro);
+    }//GEN-LAST:event_BotonConfirmarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String tempIni = AnnoIni.getValue().toString()+ "-" + MesIni.getValue().toString()+"-"+ DiaIni.getValue().toString();
         String tempFinal = AnnoFinal.getValue().toString()+ "-" + MesFinal.getValue().toString()+"-"+ DiaFinal.getValue().toString();
         Date Ini = Date.valueOf(tempIni);
@@ -131,7 +148,7 @@ public class Cartelera extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(Cartelera.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_BotonConfirmarActionPerformed
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -177,6 +194,7 @@ public class Cartelera extends javax.swing.JFrame {
     private javax.swing.JSpinner MesFinal;
     private javax.swing.JSpinner MesIni;
     private javax.swing.JTable TablaCartelera;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
