@@ -37,30 +37,28 @@ public class Cartelera extends javax.swing.JFrame {
         jSpinner11 = new javax.swing.JSpinner();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         TablaCartelera.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Produccion", "Nombre", "Teatro"
             }
         ));
-        TablaCartelera.setRowHeight(40);
+        TablaCartelera.setRowHeight(45);
         jScrollPane1.setViewportView(TablaCartelera);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 940, 400));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 740, 400));
 
         jSpinner1.setModel(new javax.swing.SpinnerNumberModel(2019, 2019, 2022, 1));
         getContentPane().add(jSpinner1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 30, 70, -1));
 
-        jSpinner7.setModel(new javax.swing.SpinnerNumberModel(2019, 2019, 2022, 1));
+        jSpinner7.setModel(new javax.swing.SpinnerNumberModel(2022, 2019, 2022, 1));
         getContentPane().add(jSpinner7, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 30, 70, -1));
 
         jSpinner8.setModel(new javax.swing.SpinnerNumberModel(1, 1, 12, 1));
@@ -69,10 +67,10 @@ public class Cartelera extends javax.swing.JFrame {
         jSpinner9.setModel(new javax.swing.SpinnerNumberModel(1, 1, 31, 1));
         getContentPane().add(jSpinner9, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 30, -1, -1));
 
-        jSpinner10.setModel(new javax.swing.SpinnerNumberModel(1, 1, 31, 1));
+        jSpinner10.setModel(new javax.swing.SpinnerNumberModel(31, 1, 31, 1));
         getContentPane().add(jSpinner10, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 30, -1, -1));
 
-        jSpinner11.setModel(new javax.swing.SpinnerNumberModel(1, 1, 12, 1));
+        jSpinner11.setModel(new javax.swing.SpinnerNumberModel(12, 1, 12, 1));
         getContentPane().add(jSpinner11, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 30, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -84,6 +82,10 @@ public class Cartelera extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Fecha Inicio:");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
+
+        jButton1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jButton1.setText("Confirmar");
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 150, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -125,6 +127,7 @@ public class Cartelera extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TablaCartelera;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
