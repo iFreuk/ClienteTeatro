@@ -21,8 +21,8 @@ public class ClienteTeatro {
     public static Connection con;
     
     
-     private static String Cliente = "Default";
-     private static String contra = "12345";
+     private final static String Cliente = "Default";
+     private final static String contra = "12345";
     /**
      * @param args the command line arguments
      */
@@ -47,23 +47,22 @@ public class ClienteTeatro {
         return true;
     }
     
-        public static void VerCartelera(String Ini, String Fin, DefaultTableModel Tabla)throws SQLException{
-        try{
-            PreparedStatement ct = con.prepareStatement("EXEC SPSobras ? ?");  //Revisa si la organizacion existe
-            ct.setDate(1, Date.valueOf(Ini));
-            ct.setDate(2, Date.valueOf(Fin));
-            ResultSet rs = ct.executeQuery();
-                            System.out.println(rs.getString(1));
-            while(rs.next()){
+        public static void VerCartelera(Date Ini, Date Fin, DefaultTableModel Tabla)throws SQLException{
+            try{
+                PreparedStatement ct = con.prepareStatement("EXEC SPSobras ?, ?");
+                ct.setDate(1, Ini);
+                ct.setDate(2, Fin);
+                ResultSet rs = ct.executeQuery();
+                while(rs.next()){
 
-                Tabla.addRow(new Object[]{rs.getString(1), rs.getString(2)});
-            
-            }
-        }catch(SQLException e){
-        System.out.println(e.getMessage());
-        
+                    System.out.println(rs.getString(1));
+                    Tabla.addRow(new Object[]{rs.getString(1), rs.getString(2)});
+
+                }
+            }catch(SQLException e){
+                System.out.println(e.getMessage());
+            }    
         }
-            }
         
         
 }

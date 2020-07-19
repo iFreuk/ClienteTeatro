@@ -5,6 +5,7 @@
  */
 package clienteteatro;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -59,9 +60,22 @@ public class Cartelera extends javax.swing.JFrame {
             new String [] {
                 "Produccion", "Teatro"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         TablaCartelera.setRowHeight(45);
+        TablaCartelera.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(TablaCartelera);
+        if (TablaCartelera.getColumnModel().getColumnCount() > 0) {
+            TablaCartelera.getColumnModel().getColumn(0).setResizable(false);
+            TablaCartelera.getColumnModel().getColumn(1).setResizable(false);
+        }
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 740, 400));
 
@@ -108,9 +122,12 @@ public class Cartelera extends javax.swing.JFrame {
     private void BotonConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonConfirmarActionPerformed
         String tempIni = AnnoIni.getValue().toString()+ "-" + MesIni.getValue().toString()+"-"+ DiaIni.getValue().toString();
         String tempFinal = AnnoFinal.getValue().toString()+ "-" + MesFinal.getValue().toString()+"-"+ DiaFinal.getValue().toString();
+        Date Ini = Date.valueOf(tempIni);
+        Date Final = Date.valueOf(tempFinal);
+        
         DefaultTableModel modelo = (DefaultTableModel) TablaCartelera.getModel();
         try {
-            ClienteTeatro.VerCartelera(tempIni, tempFinal, modelo);
+            ClienteTeatro.VerCartelera(Ini, Final, modelo);
         } catch (SQLException ex) {
             Logger.getLogger(Cartelera.class.getName()).log(Level.SEVERE, null, ex);
         }
