@@ -6,8 +6,12 @@
 package clienteteatro;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -24,6 +28,7 @@ public class ClienteTeatro {
      */
     public static void main(String[] args) {
         Login();
+        new Cartelera();
     }
     
     public static boolean Login(){
@@ -42,4 +47,23 @@ public class ClienteTeatro {
         return true;
     }
     
+        public static void VerCartelera(String Ini, String Fin, DefaultTableModel Tabla)throws SQLException{
+        try{
+            PreparedStatement ct = con.prepareStatement("EXEC SPSobras ? ?");  //Revisa si la organizacion existe
+            ct.setDate(1, Date.valueOf(Ini));
+            ct.setDate(2, Date.valueOf(Fin));
+            ResultSet rs = ct.executeQuery();
+                            System.out.println(rs.getString(1));
+            while(rs.next()){
+
+                Tabla.addRow(new Object[]{rs.getString(1), rs.getString(2)});
+            
+            }
+        }catch(SQLException e){
+        System.out.println(e.getMessage());
+        
+        }
+            }
+        
+        
 }

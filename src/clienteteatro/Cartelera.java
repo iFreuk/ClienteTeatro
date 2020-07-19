@@ -5,6 +5,11 @@
  */
 package clienteteatro;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author iFreuk
@@ -16,6 +21,8 @@ public class Cartelera extends javax.swing.JFrame {
      */
     public Cartelera() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
     }
 
     /**
@@ -29,17 +36,20 @@ public class Cartelera extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         TablaCartelera = new javax.swing.JTable();
-        jSpinner1 = new javax.swing.JSpinner();
-        jSpinner7 = new javax.swing.JSpinner();
-        jSpinner8 = new javax.swing.JSpinner();
-        jSpinner9 = new javax.swing.JSpinner();
-        jSpinner10 = new javax.swing.JSpinner();
-        jSpinner11 = new javax.swing.JSpinner();
+        AnnoIni = new javax.swing.JSpinner();
+        AnnoFinal = new javax.swing.JSpinner();
+        MesIni = new javax.swing.JSpinner();
+        DiaIni = new javax.swing.JSpinner();
+        DiaFinal = new javax.swing.JSpinner();
+        MesFinal = new javax.swing.JSpinner();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        BotonConfirmar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Boleteria");
+        setName(""); // NOI18N
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         TablaCartelera.setModel(new javax.swing.table.DefaultTableModel(
@@ -47,7 +57,7 @@ public class Cartelera extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Produccion", "Nombre", "Teatro"
+                "Produccion", "Teatro"
             }
         ));
         TablaCartelera.setRowHeight(45);
@@ -55,23 +65,23 @@ public class Cartelera extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 740, 400));
 
-        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(2019, 2019, 2022, 1));
-        getContentPane().add(jSpinner1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 30, 70, -1));
+        AnnoIni.setModel(new javax.swing.SpinnerNumberModel(2019, 2019, 2022, 1));
+        getContentPane().add(AnnoIni, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 30, 70, -1));
 
-        jSpinner7.setModel(new javax.swing.SpinnerNumberModel(2022, 2019, 2022, 1));
-        getContentPane().add(jSpinner7, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 30, 70, -1));
+        AnnoFinal.setModel(new javax.swing.SpinnerNumberModel(2022, 2019, 2022, 1));
+        getContentPane().add(AnnoFinal, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 30, 70, -1));
 
-        jSpinner8.setModel(new javax.swing.SpinnerNumberModel(1, 1, 12, 1));
-        getContentPane().add(jSpinner8, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 30, -1, -1));
+        MesIni.setModel(new javax.swing.SpinnerNumberModel(1, 1, 12, 1));
+        getContentPane().add(MesIni, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 30, -1, -1));
 
-        jSpinner9.setModel(new javax.swing.SpinnerNumberModel(1, 1, 31, 1));
-        getContentPane().add(jSpinner9, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 30, -1, -1));
+        DiaIni.setModel(new javax.swing.SpinnerNumberModel(1, 1, 31, 1));
+        getContentPane().add(DiaIni, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 30, -1, -1));
 
-        jSpinner10.setModel(new javax.swing.SpinnerNumberModel(31, 1, 31, 1));
-        getContentPane().add(jSpinner10, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 30, -1, -1));
+        DiaFinal.setModel(new javax.swing.SpinnerNumberModel(31, 1, 31, 1));
+        getContentPane().add(DiaFinal, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 30, -1, -1));
 
-        jSpinner11.setModel(new javax.swing.SpinnerNumberModel(12, 1, 12, 1));
-        getContentPane().add(jSpinner11, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 30, -1, -1));
+        MesFinal.setModel(new javax.swing.SpinnerNumberModel(12, 1, 12, 1));
+        getContentPane().add(MesFinal, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 30, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
@@ -83,12 +93,28 @@ public class Cartelera extends javax.swing.JFrame {
         jLabel2.setText("Fecha Inicio:");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
 
-        jButton1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jButton1.setText("Confirmar");
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 150, -1, -1));
+        BotonConfirmar.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        BotonConfirmar.setText("Confirmar");
+        BotonConfirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonConfirmarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(BotonConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 150, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void BotonConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonConfirmarActionPerformed
+        String tempIni = AnnoIni.getValue().toString()+ "-" + MesIni.getValue().toString()+"-"+ DiaIni.getValue().toString();
+        String tempFinal = AnnoFinal.getValue().toString()+ "-" + MesFinal.getValue().toString()+"-"+ DiaFinal.getValue().toString();
+        DefaultTableModel modelo = (DefaultTableModel) TablaCartelera.getModel();
+        try {
+            ClienteTeatro.VerCartelera(tempIni, tempFinal, modelo);
+        } catch (SQLException ex) {
+            Logger.getLogger(Cartelera.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_BotonConfirmarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -126,16 +152,16 @@ public class Cartelera extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JSpinner AnnoFinal;
+    private javax.swing.JSpinner AnnoIni;
+    private javax.swing.JButton BotonConfirmar;
+    private javax.swing.JSpinner DiaFinal;
+    private javax.swing.JSpinner DiaIni;
+    private javax.swing.JSpinner MesFinal;
+    private javax.swing.JSpinner MesIni;
     private javax.swing.JTable TablaCartelera;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JSpinner jSpinner10;
-    private javax.swing.JSpinner jSpinner11;
-    private javax.swing.JSpinner jSpinner7;
-    private javax.swing.JSpinner jSpinner8;
-    private javax.swing.JSpinner jSpinner9;
     // End of variables declaration//GEN-END:variables
 }

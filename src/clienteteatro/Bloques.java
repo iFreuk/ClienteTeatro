@@ -16,6 +16,8 @@ public class Bloques extends javax.swing.JFrame {
      */
     public Bloques() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
     }
 
     /**
