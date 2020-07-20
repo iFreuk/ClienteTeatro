@@ -45,6 +45,7 @@ public class Bloques extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        TablaBloques.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         TablaBloques.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -64,6 +65,11 @@ public class Bloques extends javax.swing.JFrame {
         Comprar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         Comprar.setForeground(new java.awt.Color(0, 0, 0));
         Comprar.setText("Comprar");
+        Comprar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComprarActionPerformed(evt);
+            }
+        });
         getContentPane().add(Comprar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 170, -1, -1));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -81,6 +87,11 @@ public class Bloques extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void ComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComprarActionPerformed
+        String Bloque = TablaBloques.getValueAt(TablaBloques.getSelectedRow(), 1).toString();
+        new PagoFilas(Titulo.getText() + " - Bloque: " + Bloque);
+    }//GEN-LAST:event_ComprarActionPerformed
 
     /**
      * @param args the command line arguments

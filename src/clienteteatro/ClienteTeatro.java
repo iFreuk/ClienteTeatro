@@ -53,6 +53,7 @@ public class ClienteTeatro {
                 ct.setDate(1, Ini);
                 ct.setDate(2, Fin);
                 ResultSet rs = ct.executeQuery();
+                Tabla.setRowCount(0);
                 while(rs.next()){
                     if("confidencial".equals(rs.getString(3))) {
                     } else{
@@ -72,7 +73,6 @@ public class ClienteTeatro {
                 ct.setString(2, Teatro);
                 ResultSet rs = ct.executeQuery();
                 while(rs.next()){
-                    System.out.println(rs.getString(1) + rs.getString(2));
                     Tabla.addRow(new Object[]{rs.getString(1) + "    -    " + rs.getString(2), rs.getString(3), rs.getString(4)});
 
                 }

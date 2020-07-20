@@ -54,6 +54,7 @@ public class Cartelera extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        TablaCartelera.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         TablaCartelera.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
