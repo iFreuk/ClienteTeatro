@@ -17,8 +17,9 @@ public class PagoFilas extends javax.swing.JFrame {
     /**
      * Creates new form PagoFilas
      */
-    private int precio;
-    private String teatro;
+    private final int precio;
+    private final String teatro;
+    int cantidad;
     public PagoFilas(String Titulo, int precio, String Teatro, String Bloque) {
         this.precio = precio;
         this.teatro = Teatro;
@@ -135,13 +136,23 @@ public class PagoFilas extends javax.swing.JFrame {
         
         
         try{
-            Long.parseLong(TarjetaNumField.getText());
+            long tarjetanum = Long.parseLong(TarjetaNumField.getText());
+            int CVVnum = Integer.parseInt(CVVField.getText());
             try{
                 Integer.parseInt(CVVField.getText());
                 
                 int cantidadCompra = Integer.parseInt(CantidadSpinner.getValue().toString());
                 int cantidadDisponible = Integer.parseInt(TablaFilas.getValueAt(TablaFilas.getSelectedRow(), 1).toString());
-                if(cantidadCompra>cantidadDisponible){
+                if(tarjetanum%3==1){
+                    JOptionPane.showMessageDialog(this, "El numero de tarjeta es incorreco y no pudo ser encontrado", "Tarjeta incorrecta",0);
+                }
+                else if(tarjetanum%3==2){
+                    JOptionPane.showMessageDialog(this, "La cuenta no cuenta con los fondos suficientes para realizar la transacción", "Fondos insuficientes",0);
+                }
+                else if(tarjetanum%3!=CVVnum%3){
+                    JOptionPane.showMessageDialog(this, "Codigo de seguridad en tarjeta incorrecto", "Codigo incorrecto",0);
+                }
+                else if(cantidadCompra>cantidadDisponible){
                     JOptionPane.showMessageDialog(this, "Hijole creo que no se va a poder", "Faltan asientos",0);
                 }
                 else{
@@ -159,7 +170,7 @@ public class PagoFilas extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void CantidadSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_CantidadSpinnerStateChanged
-        int cantidad = Integer.parseInt(CantidadSpinner.getValue().toString());
+        this.cantidad  = Integer.parseInt(CantidadSpinner.getValue().toString());
         CostoField.setText(Integer.toString(cantidad*precio));
     }//GEN-LAST:event_CantidadSpinnerStateChanged
 
