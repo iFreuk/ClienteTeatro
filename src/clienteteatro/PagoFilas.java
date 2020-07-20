@@ -5,6 +5,7 @@
  */
 package clienteteatro;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -137,7 +138,16 @@ public class PagoFilas extends javax.swing.JFrame {
             Long.parseLong(TarjetaNumField.getText());
             try{
                 Integer.parseInt(CVVField.getText());
-            
+                
+                int cantidadCompra = Integer.parseInt(CantidadSpinner.getValue().toString());
+                int cantidadDisponible = Integer.parseInt(TablaFilas.getValueAt(TablaFilas.getSelectedRow(), 1).toString());
+                if(cantidadCompra>cantidadDisponible){
+                    JOptionPane.showMessageDialog(this, "Hijole creo que no se va a poder", "Faltan asientos",0);
+                }
+                else{
+                TablaFilas.setValueAt(Integer.toString(cantidadDisponible-cantidadCompra),TablaFilas.getSelectedRow(), 1);
+                
+                }
          
             }catch(NumberFormatException e){
                 CVVField.setText("ERROR");
