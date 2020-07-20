@@ -19,7 +19,9 @@ public class Bloques extends javax.swing.JFrame {
     /**
      * Creates new form Bloques
      */
+    private String teatro;
     public Bloques(String ObraName, String Teatro) {
+        this.teatro = Teatro;
         initComponents();
         Titulo.setText(ObraName);
         CargaBloques(ObraName, Teatro);
@@ -42,7 +44,7 @@ public class Bloques extends javax.swing.JFrame {
         Comprar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         TablaBloques.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
@@ -90,7 +92,8 @@ public class Bloques extends javax.swing.JFrame {
 
     private void ComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComprarActionPerformed
         String Bloque = TablaBloques.getValueAt(TablaBloques.getSelectedRow(), 1).toString();
-        new PagoFilas(Titulo.getText() + " - Bloque: " + Bloque);
+        int Precio = Integer.parseInt(TablaBloques.getValueAt(TablaBloques.getSelectedRow(), 2).toString());
+        new PagoFilas(Titulo.getText() + " - Bloque: " + Bloque, Precio, teatro, Bloque);
     }//GEN-LAST:event_ComprarActionPerformed
 
     /**

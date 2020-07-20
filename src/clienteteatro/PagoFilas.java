@@ -5,6 +5,8 @@
  */
 package clienteteatro;
 
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author iFreuk
@@ -14,9 +16,16 @@ public class PagoFilas extends javax.swing.JFrame {
     /**
      * Creates new form PagoFilas
      */
-    public PagoFilas(String Titulo) {
+    private int precio;
+    private String teatro;
+    public PagoFilas(String Titulo, int precio, String Teatro, String Bloque) {
+        this.precio = precio;
+        this.teatro = Teatro;
         initComponents();
+        DefaultTableModel modelo = (DefaultTableModel) TablaFilas.getModel();
+        ClienteTeatro.CargaFilas(Teatro, Bloque, modelo);
         TituloPago.setText(Titulo);
+        CostoField.setText(Integer.toString(precio));
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
@@ -33,20 +42,20 @@ public class PagoFilas extends javax.swing.JFrame {
 
         TituloPago = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jSpinner1 = new javax.swing.JSpinner();
+        TablaFilas = new javax.swing.JTable();
+        CantidadSpinner = new javax.swing.JSpinner();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        CostoField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
-        jTextField2 = new javax.swing.JTextField();
+        TarjetaNumField = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        CVVField = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -54,7 +63,8 @@ public class PagoFilas extends javax.swing.JFrame {
         TituloPago.setForeground(new java.awt.Color(0, 0, 0));
         getContentPane().add(TituloPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, -1, -1));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        TablaFilas.setFont(new java.awt.Font("Dialog", 0, 36)); // NOI18N
+        TablaFilas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -62,20 +72,26 @@ public class PagoFilas extends javax.swing.JFrame {
                 "Filas", "Asientos Disponibles"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        TablaFilas.setRowHeight(50);
+        jScrollPane1.setViewportView(TablaFilas);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
 
-        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(1, 1, 8, 1));
-        getContentPane().add(jSpinner1, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 110, -1, -1));
+        CantidadSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, 8, 1));
+        CantidadSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                CantidadSpinnerStateChanged(evt);
+            }
+        });
+        getContentPane().add(CantidadSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 110, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel1.setText("Cantidad:");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 110, -1, -1));
 
-        jTextField1.setEditable(false);
-        jTextField1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 190, 140, -1));
+        CostoField.setEditable(false);
+        CostoField.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        getContentPane().add(CostoField, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 190, 140, -1));
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel2.setText("Costo:");
@@ -85,8 +101,8 @@ public class PagoFilas extends javax.swing.JFrame {
         jComboBox1.setToolTipText("");
         getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 330, 60, -1));
 
-        jTextField2.setText("Digite un numero de tarjeta");
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 260, 300, -1));
+        TarjetaNumField.setText("Digite un numero de tarjeta");
+        getContentPane().add(TarjetaNumField, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 260, 300, -1));
 
         jLabel3.setText("Vencimiento:");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 300, -1, -1));
@@ -98,20 +114,49 @@ public class PagoFilas extends javax.swing.JFrame {
         jLabel4.setText("/");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 322, 20, 40));
 
-        jTextField3.setText("CVV");
-        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 370, -1, -1));
+        CVVField.setText("CVV");
+        getContentPane().add(CVVField, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 370, 50, -1));
 
         jButton1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jButton1.setText("Pagar 💸");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 440, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+        
+        
+        try{
+            Long.parseLong(TarjetaNumField.getText());
+            try{
+                Integer.parseInt(CVVField.getText());
+            
+         
+            }catch(NumberFormatException e){
+                CVVField.setText("ERROR");
+            }
+        }
+        catch(NumberFormatException e){
+            TarjetaNumField.setText("Numero de Tarjeta Invalido");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void CantidadSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_CantidadSpinnerStateChanged
+        int cantidad = Integer.parseInt(CantidadSpinner.getValue().toString());
+        CostoField.setText(Integer.toString(cantidad*precio));
+    }//GEN-LAST:event_CantidadSpinnerStateChanged
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[],String Titulo) {
+    public static void main(String args[],String Titulo, int precio, String Teatro, String Bloque) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -138,12 +183,17 @@ public class PagoFilas extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-               new PagoFilas(Titulo).setVisible(true);
+               new PagoFilas(Titulo, precio, Teatro, Bloque).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField CVVField;
+    private javax.swing.JSpinner CantidadSpinner;
+    private javax.swing.JTextField CostoField;
+    private javax.swing.JTable TablaFilas;
+    private javax.swing.JTextField TarjetaNumField;
     private javax.swing.JLabel TituloPago;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
@@ -153,10 +203,5 @@ public class PagoFilas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
 }

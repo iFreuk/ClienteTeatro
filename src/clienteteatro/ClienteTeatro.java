@@ -81,5 +81,23 @@ public class ClienteTeatro {
             }    
         }
         
+            
+        public static void CargaFilas(String Teatro, String Bloque, DefaultTableModel Tabla){
+            System.out.println(Teatro+"  -  "+Bloque);
+            try{
+                PreparedStatement ct = con.prepareStatement("EXEC SPSfilas ?, ?");
+                ct.setString(1, Teatro);
+                ct.setString(2, Bloque);
+                ResultSet rs = ct.executeQuery();
+                while(rs.next()){
+                    System.out.println(rs.getString(1));
+                    Tabla.addRow(new Object[]{rs.getString(1), rs.getString(2)});
+
+                }
+            }catch(SQLException e){
+                System.out.println(e.getMessage());
+            }   
+        }
+        
         
 }
