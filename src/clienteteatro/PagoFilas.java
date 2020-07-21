@@ -147,7 +147,7 @@ public class PagoFilas extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "El numero de tarjeta es incorreco y no pudo ser encontrado", "Tarjeta incorrecta",0);
                 }
                 else if(tarjetanum%3==2){
-                    JOptionPane.showMessageDialog(this, "La cuenta no cuenta con los fondos suficientes para realizar la transacción", "Fondos insuficientes",0);
+                    JOptionPane.showMessageDialog(this, "La cuenta se encuentra expirada por favor contactar al banco proveedor de su servicio", "Tarjeta expirada o cancelada",0);
                 }
                 else if(tarjetanum%3!=CVVnum%3){
                     JOptionPane.showMessageDialog(this, "Codigo de seguridad en tarjeta incorrecto", "Codigo incorrecto",0);
