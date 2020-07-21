@@ -6,9 +6,15 @@
 package clienteteatro;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -25,6 +31,9 @@ public class Bloques extends javax.swing.JFrame {
         initComponents();
         Titulo.setText(ObraName);
         CargaBloques(ObraName, Teatro);
+        
+        
+        
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
@@ -134,6 +143,13 @@ public class Bloques extends javax.swing.JFrame {
     DefaultTableModel modelo = (DefaultTableModel) TablaBloques.getModel();
         try {
             ClienteTeatro.VerPresentaciones(ObraName, Teatro, modelo);
+            
+            TableRowSorter<TableModel> sorter = new TableRowSorter<>(modelo);
+            TablaBloques.setRowSorter(sorter);
+
+            List<RowSorter.SortKey> sortKeys = new ArrayList<>(25);
+            sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
+            sorter.setSortKeys(sortKeys);
         } catch (SQLException ex) {
             Logger.getLogger(Cartelera.class.getName()).log(Level.SEVERE, null, ex);
         }
