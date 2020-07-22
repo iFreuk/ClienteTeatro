@@ -5,6 +5,8 @@
  */
 package clienteteatro;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -83,20 +85,35 @@ public class ClienteTeatro {
         
             
         public static void CargaFilas(String Teatro, String Bloque, DefaultTableModel Tabla){
-            System.out.println(Teatro+"  -  "+Bloque);
             try{
                 PreparedStatement ct = con.prepareStatement("EXEC SPSfilas ?, ?");
                 ct.setString(1, Teatro);
                 ct.setString(2, Bloque);
                 ResultSet rs = ct.executeQuery();
                 while(rs.next()){
-                    System.out.println(rs.getString(1));
                     Tabla.addRow(new Object[]{rs.getString(1), rs.getString(2)});
 
                 }
             }catch(SQLException e){
                 System.out.println(e.getMessage());
             }   
+        }
+        
+        public static void CreaRegistroCompra(int aleatorio, int cantidad, String Titulo) throws UnknownHostException{
+            InetAddress address = InetAddress.getLocalHost();
+            try{
+                PreparedStatement ct = con.prepareStatement("EXEC SPIregistro ?, ?, ?, ?");
+                ct.setString(1, address.getHostAddress());
+                ct.setInt(2, aleatorio);
+                ct.setInt(3, cantidad);
+                ct.setString(4, Titulo);
+                ct.executeUpdate();
+            }catch(SQLException e){
+                System.out.println(e.getMessage());
+            }
+        
+        
+        
         }
         
         

@@ -5,6 +5,10 @@
  */
 package clienteteatro;
 
+import java.net.UnknownHostException;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -20,7 +24,9 @@ public class PagoFilas extends javax.swing.JFrame {
     private final int precio;
     private final String teatro;
     int cantidad;
+    private Random aleatorio;
     public PagoFilas(String Titulo, int precio, String Teatro, String Bloque) {
+        aleatorio = new Random();
         this.precio = precio;
         this.teatro = Teatro;
         initComponents();
@@ -156,12 +162,17 @@ public class PagoFilas extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "Hijole creo que no se va a poder", "Faltan asientos",0);
                 }
                 else{
-                TablaFilas.setValueAt(Integer.toString(cantidadDisponible-cantidadCompra),TablaFilas.getSelectedRow(), 1);
+                    
+                    int numReg = aleatorio.nextInt(1000000);
+                    int asientos = Integer.parseInt(CantidadSpinner.getValue().toString());
+                    ClienteTeatro.CreaRegistroCompra(numReg, asientos, TituloPago.getText());
                 
                 }
          
             }catch(NumberFormatException e){
                 CVVField.setText("ERROR");
+            } catch (UnknownHostException ex) {
+                Logger.getLogger(PagoFilas.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         catch(NumberFormatException e){
