@@ -6,9 +6,8 @@
 package clienteteatro;
 
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -18,11 +17,16 @@ import javax.swing.table.DefaultTableModel;
  */
 public class PagoFilas extends javax.swing.JFrame {
 
+    public static void setNumeros(ArrayList<Integer> numeros) {
+        PagoFilas.numeros = numeros;
+    }
+
     /**
      * Creates new form PagoFilas
      */
     private final int precio;
     private final String teatro;
+    public static ArrayList<Integer> numeros;
     int cantidad;
     private Random aleatorio;
     public PagoFilas(String Titulo, int precio, String Teatro, String Bloque) {
@@ -163,16 +167,17 @@ public class PagoFilas extends javax.swing.JFrame {
                 }
                 else{
                     
-                    int numReg = aleatorio.nextInt(1000000);
-                    int asientos = Integer.parseInt(CantidadSpinner.getValue().toString());
-                    ClienteTeatro.CreaRegistroCompra(numReg, asientos, TituloPago.getText());
+                    //int numReg = aleatorio.nextInt(1000000);
+                    //int asientos = Integer.parseInt(CantidadSpinner.getValue().toString());
+                    //ClienteTeatro.CreaRegistroCompra(numReg, asientos, TituloPago.getText());
+                   new Asientos(Integer.parseInt(CantidadSpinner.getValue().toString()));
                 
                 }
          
             }catch(NumberFormatException e){
                 CVVField.setText("ERROR");
-            } catch (UnknownHostException ex) {
-                Logger.getLogger(PagoFilas.class.getName()).log(Level.SEVERE, null, ex);
+            //} catch (UnknownHostException ex) {
+              //  Logger.getLogger(PagoFilas.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         catch(NumberFormatException e){
