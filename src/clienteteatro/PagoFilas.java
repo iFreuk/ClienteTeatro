@@ -17,22 +17,21 @@ import javax.swing.table.DefaultTableModel;
  */
 public class PagoFilas extends javax.swing.JFrame {
 
-    public static void setNumeros(ArrayList<Integer> numeros) {
-        PagoFilas.numeros = numeros;
-    }
-
     /**
      * Creates new form PagoFilas
      */
     private final int precio;
     private final String teatro;
-    public static ArrayList<Integer> numeros;
+    private final String Bloque;
     int cantidad;
     private Random aleatorio;
+    private final String titulo;
     public PagoFilas(String Titulo, int precio, String Teatro, String Bloque) {
         aleatorio = new Random();
+        this.Bloque = Bloque;
         this.precio = precio;
         this.teatro = Teatro;
+        this.titulo = Titulo;
         initComponents();
         DefaultTableModel modelo = (DefaultTableModel) TablaFilas.getModel();
         ClienteTeatro.CargaFilas(Teatro, Bloque, modelo);
@@ -167,10 +166,8 @@ public class PagoFilas extends javax.swing.JFrame {
                 }
                 else{
                     
-                    //int numReg = aleatorio.nextInt(1000000);
-                    //int asientos = Integer.parseInt(CantidadSpinner.getValue().toString());
-                    //ClienteTeatro.CreaRegistroCompra(numReg, asientos, TituloPago.getText());
-                   new Asientos(Integer.parseInt(CantidadSpinner.getValue().toString()));
+                    int numReg = aleatorio.nextInt(1000000);
+                   new Asientos(Integer.parseInt(CantidadSpinner.getValue().toString()), numReg, Bloque, teatro, titulo,TablaFilas.getValueAt(TablaFilas.getSelectedRow(),0).toString());
                 
                 }
          

@@ -18,8 +18,18 @@ public class Asientos extends javax.swing.JFrame {
      */
     private final int cantidad;
     private final ArrayList<javax.swing.JSpinner> Spinners = new ArrayList<>();
-    public Asientos(int cantidad) {
+    private final int numreg;
+    private final String bloque;
+    private final String teatro;
+    private final String titulo;
+    private final String fila;
+    public Asientos(int cantidad, int numreg , String bloque, String teatro, String titulo, String Fila) {
         this.cantidad = cantidad;
+        this.numreg = numreg;
+        this.bloque = bloque;
+        this.teatro = teatro;
+        this.titulo = titulo;
+        this.fila = Fila;
         initComponents();
         enlistarspinners();
         jSpinner8.setVisible(false);
@@ -147,14 +157,16 @@ public class Asientos extends javax.swing.JFrame {
         for(int i =0; i<cantidad; i++){
         numeros.add(Integer.parseInt(Spinners.get(i).getValue().toString()));
         }
-        PagoFilas.setNumeros(numeros);
-        this.dispose();
+        String FechaHora = Bloques.TablaBloques.getValueAt(Bloques.TablaBloques.getSelectedRow(), 0).toString();
+        String fecha = FechaHora.split("    -    ")[0];
+        String hora = FechaHora.split("    -    ")[1];
+        ClienteTeatro.BuscaAsiento(teatro, titulo, bloque, fila, fecha, hora, Integer.parseInt(Spinners.get(0).getValue().toString()));
     }//GEN-LAST:event_ConfirmarActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[], int cantidad) {
+    public static void main(String args[], int cantidad, int numreg, String bloque, String teatro, String titulo, String Fila) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -181,7 +193,7 @@ public class Asientos extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Asientos(cantidad).setVisible(true);
+                new Asientos(cantidad, numreg, bloque, teatro, titulo, Fila).setVisible(true);
             }
         });
     }

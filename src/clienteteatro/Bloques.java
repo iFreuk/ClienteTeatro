@@ -158,7 +158,7 @@ public class Bloques extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Comprar;
-    private javax.swing.JTable TablaBloques;
+    public static javax.swing.JTable TablaBloques;
     private javax.swing.JLabel Titulo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

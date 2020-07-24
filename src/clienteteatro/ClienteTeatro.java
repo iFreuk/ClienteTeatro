@@ -112,7 +112,22 @@ public class ClienteTeatro {
                 System.out.println(e.getMessage());
             }
         
+        }
         
+        public static void BuscaAsiento(String teatro, String produ, String bloque, String fila, String fecha, String Hora, int numasiento){
+            try{
+                PreparedStatement ct = con.prepareStatement("EXEC SPSasientos ?, ?, ?, ?, ?, ?, ?");
+                ct.setString(1, teatro);
+                ct.setString(2, produ);
+                ct.setString(3, bloque);
+                ct.setString(4, fila);
+                ct.setString(5, fecha);
+                ct.setString(6, Hora);
+                ct.setInt(7, numasiento);
+                ResultSet rs = ct.executeQuery();
+            }catch(SQLException e){
+                System.out.println(e.getMessage());
+            }
         
         }
         
