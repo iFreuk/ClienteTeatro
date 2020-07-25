@@ -84,14 +84,17 @@ public class ClienteTeatro {
         }
         
             
-        public static void CargaFilas(String Teatro, String Bloque, DefaultTableModel Tabla){
+        public static void CargaFilas(String Teatro, String Bloque, String obra, DefaultTableModel Tabla){
             try{
                 PreparedStatement ct = con.prepareStatement("EXEC SPSfilas ?, ?");
                 ct.setString(1, Teatro);
                 ct.setString(2, Bloque);
                 ResultSet rs = ct.executeQuery();
                 while(rs.next()){
-                    Tabla.addRow(new Object[]{rs.getString(1), rs.getString(2)});
+                    String FechaHora = Bloques.TablaBloques.getValueAt(Bloques.TablaBloques.getSelectedRow(), 0).toString();
+                    String fecha = FechaHora.split("    -    ")[0];
+                    String hora = FechaHora.split("    -    ")[1];
+                    Tabla.addRow(new Object[]{rs.getString(1), Integer.parseInt(rs.getString(2))-CuentaAsiento(Teatro, obra, Bloque, rs.getString(2), fecha, hora)});
 
                 }
             }catch(SQLException e){
@@ -162,6 +165,25 @@ public class ClienteTeatro {
             }catch(SQLException e){
                 System.out.println(e.getMessage());
             }
+        }
+        
+        public static int CuentaAsiento(String teatro, String produ, String bloque, String fila, String fecha, String Hora) throws SQLException{
+            try{
+                PreparedStatement ct = con.prepareStatement("EXEC SPCasientos ?, ?, ?, ?, ?, ?");
+                ct.setString(1, teatro);
+                ct.setString(2, produ);
+                ct.setString(3, bloque);
+                ct.setString(4, fila);
+                ct.setString(5, fecha);
+                ct.setString(6, Hora);
+                ResultSet rs = ct.executeQuery();
+                rs.next();
+                return rs.getInt(1);
+                }
+            catch(SQLException e){
+                System.out.println(e.getMessage());
+            }
+            return 0;
         }
         
         

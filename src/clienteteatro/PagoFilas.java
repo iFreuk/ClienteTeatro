@@ -34,7 +34,7 @@ public class PagoFilas extends javax.swing.JFrame {
         this.titulo = produ;
         initComponents();
         DefaultTableModel modelo = (DefaultTableModel) TablaFilas.getModel();
-        ClienteTeatro.CargaFilas(Teatro, Bloque, modelo);
+        ClienteTeatro.CargaFilas(Teatro, Bloque, titulo ,  modelo);
         TituloPago.setText(Titulo);
         CostoField.setText(Integer.toString(precio));
         this.setLocationRelativeTo(null);
