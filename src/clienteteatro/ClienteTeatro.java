@@ -114,7 +114,9 @@ public class ClienteTeatro {
         
         }
         
-        public static void BuscaAsiento(String teatro, String produ, String bloque, String fila, String fecha, String Hora, int numasiento){
+        public static String BuscaAsiento(String teatro, String produ, String bloque, String fila, String fecha, String Hora, int numasiento){
+            boolean found = false;
+            String usados = "Los asientos ya usados son: ";
             try{
                 PreparedStatement ct = con.prepareStatement("EXEC SPSasientos ?, ?, ?, ?, ?, ?, ?");
                 ct.setString(1, teatro);
@@ -125,10 +127,41 @@ public class ClienteTeatro {
                 ct.setString(6, Hora);
                 ct.setInt(7, numasiento);
                 ResultSet rs = ct.executeQuery();
+                if(rs.next()){
+                found = true;
+                }
+                if(found){
+                    usados = usados + rs.getInt(1);
+                    while(rs.next()){
+                        usados = usados + " - " + rs.getInt(1);
+
+                    }
+                    return usados;
+                }
+                else{
+                    return "";
+                }
             }catch(SQLException e){
                 System.out.println(e.getMessage());
             }
+        return "";
+        }
         
+        public static void InsertarAsientos(String teatro, String produ, String bloque, String fila, String fecha, String hora, int numasiento){
+        try{
+                PreparedStatement ct = con.prepareStatement("EXEC SPIasientos ?, ?, ?, ?, ?, ?, ?");
+                ct.setString(1, teatro);
+                ct.setString(2, produ);
+                ct.setString(3, bloque);
+                ct.setString(4, fila);
+                ct.setString(5, fecha);
+                ct.setString(6, hora);
+                ct.setInt(7, numasiento);
+                ct.executeUpdate();
+
+            }catch(SQLException e){
+                System.out.println(e.getMessage());
+            }
         }
         
         

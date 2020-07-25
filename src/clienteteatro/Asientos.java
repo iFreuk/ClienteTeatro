@@ -6,6 +6,7 @@
 package clienteteatro;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -154,13 +155,26 @@ public class Asientos extends javax.swing.JFrame {
 
     private void ConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmarActionPerformed
         ArrayList<Integer> numeros = new ArrayList<>();
-        for(int i =0; i<cantidad; i++){
-        numeros.add(Integer.parseInt(Spinners.get(i).getValue().toString()));
-        }
         String FechaHora = Bloques.TablaBloques.getValueAt(Bloques.TablaBloques.getSelectedRow(), 0).toString();
         String fecha = FechaHora.split("    -    ")[0];
         String hora = FechaHora.split("    -    ")[1];
-        ClienteTeatro.BuscaAsiento(teatro, titulo, bloque, fila, fecha, hora, Integer.parseInt(Spinners.get(0).getValue().toString()));
+        String usados = "";
+        
+        for(int i =0; i<cantidad; i++){
+            numeros.add(Integer.parseInt(Spinners.get(i).getValue().toString()));
+            usados = ClienteTeatro.BuscaAsiento(teatro, titulo, bloque, fila, fecha, hora, numeros.get(i));
+            if(!"".equals(usados)){
+                break;
+                }
+            }
+            if("".equals(usados)){
+                for(int i =0; i<cantidad; i++){
+                    ClienteTeatro.InsertarAsientos(teatro, titulo, bloque, fila, fecha, hora, numeros.get(i));
+                }
+                usados = "Todo gud";
+                }
+            JOptionPane.showMessageDialog(this, usados, "Informacion",1);
+            
     }//GEN-LAST:event_ConfirmarActionPerformed
 
     /**

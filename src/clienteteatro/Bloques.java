@@ -102,7 +102,7 @@ public class Bloques extends javax.swing.JFrame {
     private void ComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComprarActionPerformed
         String Bloque = TablaBloques.getValueAt(TablaBloques.getSelectedRow(), 1).toString();
         int Precio = Integer.parseInt(TablaBloques.getValueAt(TablaBloques.getSelectedRow(), 2).toString());
-        new PagoFilas(Titulo.getText() + " - Bloque: " + Bloque, Precio, teatro, Bloque);
+        new PagoFilas(Titulo.getText() + " - Bloque: " + Bloque, Precio, teatro, Bloque, Titulo.getText());
     }//GEN-LAST:event_ComprarActionPerformed
 
     /**

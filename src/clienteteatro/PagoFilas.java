@@ -26,12 +26,12 @@ public class PagoFilas extends javax.swing.JFrame {
     int cantidad;
     private Random aleatorio;
     private final String titulo;
-    public PagoFilas(String Titulo, int precio, String Teatro, String Bloque) {
+    public PagoFilas(String Titulo, int precio, String Teatro, String Bloque, String produ) {
         aleatorio = new Random();
         this.Bloque = Bloque;
         this.precio = precio;
         this.teatro = Teatro;
-        this.titulo = Titulo;
+        this.titulo = produ;
         initComponents();
         DefaultTableModel modelo = (DefaultTableModel) TablaFilas.getModel();
         ClienteTeatro.CargaFilas(Teatro, Bloque, modelo);
@@ -190,7 +190,7 @@ public class PagoFilas extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[],String Titulo, int precio, String Teatro, String Bloque) {
+    public static void main(String args[],String Titulo, int precio, String Teatro, String Bloque, String produ) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -217,7 +217,7 @@ public class PagoFilas extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-               new PagoFilas(Titulo, precio, Teatro, Bloque).setVisible(true);
+               new PagoFilas(Titulo, precio, Teatro, Bloque, produ).setVisible(true);
             }
         });
     }
