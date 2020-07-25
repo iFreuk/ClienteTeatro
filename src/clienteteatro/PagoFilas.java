@@ -5,9 +5,11 @@
  */
 package clienteteatro;
 
+import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -167,7 +169,8 @@ public class PagoFilas extends javax.swing.JFrame {
                 else{
                     
                     int numReg = aleatorio.nextInt(1000000);
-                   new Asientos(Integer.parseInt(CantidadSpinner.getValue().toString()), numReg, Bloque, teatro, titulo,TablaFilas.getValueAt(TablaFilas.getSelectedRow(),0).toString());
+                    InetAddress inetAddress = InetAddress. getLocalHost();
+                   new Asientos(Integer.parseInt(CantidadSpinner.getValue().toString()), numReg, Bloque, teatro, titulo,TablaFilas.getValueAt(TablaFilas.getSelectedRow(),0).toString(), inetAddress.getHostAddress(), Integer.parseInt(CostoField.getText()));
                 
                 }
          
@@ -175,6 +178,8 @@ public class PagoFilas extends javax.swing.JFrame {
                 CVVField.setText("ERROR");
             //} catch (UnknownHostException ex) {
               //  Logger.getLogger(PagoFilas.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnknownHostException ex) {
+                Logger.getLogger(PagoFilas.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         catch(NumberFormatException e){

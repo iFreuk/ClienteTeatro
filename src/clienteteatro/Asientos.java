@@ -6,6 +6,7 @@
 package clienteteatro;
 
 import java.util.ArrayList;
+import java.util.Random;
 import javax.swing.JOptionPane;
 
 /**
@@ -24,13 +25,17 @@ public class Asientos extends javax.swing.JFrame {
     private final String teatro;
     private final String titulo;
     private final String fila;
-    public Asientos(int cantidad, int numreg , String bloque, String teatro, String titulo, String Fila) {
+    private final String IP;
+    private final int monto;
+    public Asientos(int cantidad, int numreg , String bloque, String teatro, String titulo, String Fila, String IP, int monto) {
         this.cantidad = cantidad;
         this.numreg = numreg;
         this.bloque = bloque;
         this.teatro = teatro;
         this.titulo = titulo;
         this.fila = Fila;
+        this.IP = IP;
+        this.monto = monto;
         initComponents();
         enlistarspinners();
         jSpinner8.setVisible(false);
@@ -113,7 +118,7 @@ public class Asientos extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jSpinner4.setModel(new javax.swing.SpinnerNumberModel(0, null, 42, 1));
+        jSpinner4.setModel(new javax.swing.SpinnerNumberModel(0, 0, 42, 1));
         getContentPane().add(jSpinner4, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 60, -1, -1));
 
         Confirmar.setText("Confirmar");
@@ -129,25 +134,25 @@ public class Asientos extends javax.swing.JFrame {
         jLabel1.setText("Seleccione los asientos");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, -1, -1));
 
-        jSpinner8.setModel(new javax.swing.SpinnerNumberModel(0, null, 42, 1));
+        jSpinner8.setModel(new javax.swing.SpinnerNumberModel(0, 0, 42, 1));
         getContentPane().add(jSpinner8, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 110, -1, -1));
 
-        jSpinner2.setModel(new javax.swing.SpinnerNumberModel(0, null, 42, 1));
+        jSpinner2.setModel(new javax.swing.SpinnerNumberModel(0, 0, 42, 1));
         getContentPane().add(jSpinner2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 60, -1, -1));
 
-        jSpinner3.setModel(new javax.swing.SpinnerNumberModel(0, null, 42, 1));
+        jSpinner3.setModel(new javax.swing.SpinnerNumberModel(0, 0, 42, 1));
         getContentPane().add(jSpinner3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, -1, -1));
 
-        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(0, null, 42, 1));
+        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(0, 0, 42, 1));
         getContentPane().add(jSpinner1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, -1));
 
-        jSpinner5.setModel(new javax.swing.SpinnerNumberModel(0, null, 42, 1));
+        jSpinner5.setModel(new javax.swing.SpinnerNumberModel(0, 0, 42, 1));
         getContentPane().add(jSpinner5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
 
-        jSpinner6.setModel(new javax.swing.SpinnerNumberModel(0, null, 42, 1));
+        jSpinner6.setModel(new javax.swing.SpinnerNumberModel(0, 0, 42, 1));
         getContentPane().add(jSpinner6, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 110, -1, -1));
 
-        jSpinner7.setModel(new javax.swing.SpinnerNumberModel(0, null, 42, 1));
+        jSpinner7.setModel(new javax.swing.SpinnerNumberModel(0, 0, 42, 1));
         getContentPane().add(jSpinner7, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, -1, -1));
 
         pack();
@@ -169,7 +174,8 @@ public class Asientos extends javax.swing.JFrame {
             }
             if("".equals(usados)){
                 for(int i =0; i<cantidad; i++){
-                    ClienteTeatro.InsertarAsientos(teatro, titulo, bloque, fila, fecha, hora, numeros.get(i));
+                    Random pato = new Random();
+                    ClienteTeatro.InsertarAsientos(teatro, titulo, bloque, fila, fecha, hora , Integer.parseInt(numeros.get(i).toString()), IP, cantidad, pato.nextInt(900000)+100000, monto);
                 }
                 usados = "Todo gud";
                 }
@@ -180,7 +186,7 @@ public class Asientos extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[], int cantidad, int numreg, String bloque, String teatro, String titulo, String Fila) {
+    public static void main(String args[], int cantidad, int numreg, String bloque, String teatro, String titulo, String Fila, String IP, int monto) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -207,7 +213,7 @@ public class Asientos extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Asientos(cantidad, numreg, bloque, teatro, titulo, Fila).setVisible(true);
+                new Asientos(cantidad, numreg, bloque, teatro, titulo, Fila, IP, monto).setVisible(true);
             }
         });
     }

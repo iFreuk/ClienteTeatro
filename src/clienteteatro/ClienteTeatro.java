@@ -94,7 +94,7 @@ public class ClienteTeatro {
                     String FechaHora = Bloques.TablaBloques.getValueAt(Bloques.TablaBloques.getSelectedRow(), 0).toString();
                     String fecha = FechaHora.split("    -    ")[0];
                     String hora = FechaHora.split("    -    ")[1];
-                    Tabla.addRow(new Object[]{rs.getString(1), Integer.parseInt(rs.getString(2))-CuentaAsiento(Teatro, obra, Bloque, rs.getString(2), fecha, hora)});
+                    Tabla.addRow(new Object[]{rs.getString(1), Integer.parseInt(rs.getString(2))-CuentaAsiento(Teatro, obra, Bloque, rs.getString(1), fecha, hora)});
 
                 }
             }catch(SQLException e){
@@ -131,28 +131,26 @@ public class ClienteTeatro {
                 ct.setInt(7, numasiento);
                 ResultSet rs = ct.executeQuery();
                 if(rs.next()){
-                found = true;
-                }
-                if(found){
                     usados = usados + rs.getInt(1);
                     while(rs.next()){
+                        System.out.println(rs.getInt(1));
                         usados = usados + " - " + rs.getInt(1);
 
                     }
-                    return usados;
                 }
                 else{
                     return "";
                 }
+                return usados;
             }catch(SQLException e){
                 System.out.println(e.getMessage());
             }
         return "";
         }
         
-        public static void InsertarAsientos(String teatro, String produ, String bloque, String fila, String fecha, String hora, int numasiento){
+        public static void InsertarAsientos(String teatro, String produ, String bloque, String fila, String fecha, String hora, int numasiento, String IP, int cantidad, int numreg, int monto){
         try{
-                PreparedStatement ct = con.prepareStatement("EXEC SPIasientos ?, ?, ?, ?, ?, ?, ?");
+                PreparedStatement ct = con.prepareStatement("EXEC SPIasientos ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?");
                 ct.setString(1, teatro);
                 ct.setString(2, produ);
                 ct.setString(3, bloque);
@@ -160,6 +158,10 @@ public class ClienteTeatro {
                 ct.setString(5, fecha);
                 ct.setString(6, hora);
                 ct.setInt(7, numasiento);
+                ct.setString(8, IP);
+                ct.setInt(9, cantidad);
+                ct.setInt(10, numreg);
+                ct.setInt(11, monto);
                 ct.executeUpdate();
 
             }catch(SQLException e){
