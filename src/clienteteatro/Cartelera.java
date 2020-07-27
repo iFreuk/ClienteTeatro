@@ -145,6 +145,7 @@ public class Cartelera extends javax.swing.JFrame {
         
         DefaultTableModel modelo = (DefaultTableModel) TablaCartelera.getModel();
         try {
+
             ClienteTeatro.VerCartelera(Ini, Final, modelo);
         } catch (SQLException ex) {
             Logger.getLogger(Cartelera.class.getName()).log(Level.SEVERE, null, ex);

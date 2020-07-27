@@ -39,6 +39,9 @@ public class PagoFilas extends javax.swing.JFrame {
         ClienteTeatro.CargaFilas(Teatro, Bloque, titulo ,  modelo);
         TituloPago.setText(Titulo);
         CostoField.setText(Integer.toString(precio));
+        //if(!ClienteTeatro.flag){
+        //    efectivo.setVisible(false);
+        //}
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
@@ -82,7 +85,7 @@ public class PagoFilas extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Filas", "Asientos Disponibles"
+                "Filas", "Asientos Disponibles", "Asientos Totales"
             }
         ));
         TablaFilas.setRowHeight(50);
@@ -175,7 +178,7 @@ public class PagoFilas extends javax.swing.JFrame {
                     
                     int numReg = aleatorio.nextInt(1000000);
                     InetAddress inetAddress = InetAddress. getLocalHost();
-                   new Asientos(Integer.parseInt(CantidadSpinner.getValue().toString()), numReg, Bloque, teatro, titulo,TablaFilas.getValueAt(TablaFilas.getSelectedRow(),0).toString(), inetAddress.getHostAddress(), Integer.parseInt(CostoField.getText()));
+                   new Asientos(cantidadCompra, numReg, Bloque, teatro, titulo,TablaFilas.getValueAt(TablaFilas.getSelectedRow(),0).toString(), inetAddress.getHostAddress(), Integer.parseInt(CostoField.getText()), TablaFilas.getValueAt(TablaFilas.getSelectedRow(),2).toString());
                 
                 }
          
