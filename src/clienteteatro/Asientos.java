@@ -113,7 +113,7 @@ public class Asientos extends javax.swing.JFrame {
         jSpinner6 = new javax.swing.JSpinner();
         jSpinner7 = new javax.swing.JSpinner();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setBackground(new java.awt.Color(51, 51, 51));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -177,7 +177,7 @@ public class Asientos extends javax.swing.JFrame {
                     Random pato = new Random();
                     ClienteTeatro.InsertarAsientos(teatro, titulo, bloque, fila, fecha, hora , Integer.parseInt(numeros.get(i).toString()), IP, cantidad, pato.nextInt(900000)+100000, monto);
                 }
-                usados = "Todo gud";
+                usados = "Compra exitosa";
                 }
             JOptionPane.showMessageDialog(this, usados, "Informacion",1);
             
