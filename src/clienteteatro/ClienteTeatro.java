@@ -68,11 +68,13 @@ public class ClienteTeatro {
             }    
         }
         
-        public static void VerPresentaciones(String ObraNombre, String Teatro, DefaultTableModel Tabla)throws SQLException{
+        public static void VerPresentaciones(String ObraNombre, String Teatro, DefaultTableModel Tabla, Date Ini, Date Fin)throws SQLException{
             try{
-                PreparedStatement ct = con.prepareStatement("EXEC SPSpresentacion ?, ?");
+                PreparedStatement ct = con.prepareStatement("EXEC SPSpresentacion ?, ?, ?, ?");
                 ct.setString(1, ObraNombre);
                 ct.setString(2, Teatro);
+                ct.setDate(3, Ini);
+                ct.setDate(4, Fin);
                 ResultSet rs = ct.executeQuery();
                 while(rs.next()){
                     Tabla.addRow(new Object[]{rs.getString(1) + "    -    " + rs.getString(2), rs.getString(3), rs.getString(4)});
