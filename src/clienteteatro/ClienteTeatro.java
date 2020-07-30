@@ -120,8 +120,6 @@ public class ClienteTeatro {
         }
         
         public static String BuscaAsiento(String teatro, String produ, String bloque, String fila, String fecha, String Hora, int numasiento){
-            boolean found = false;
-            String usados = "Los asientos ya usados son: ";
             try{
                 PreparedStatement ct = con.prepareStatement("EXEC SPSasientos ?, ?, ?, ?, ?, ?, ?");
                 ct.setString(1, teatro);
@@ -132,18 +130,11 @@ public class ClienteTeatro {
                 ct.setString(6, Hora);
                 ct.setInt(7, numasiento);
                 ResultSet rs = ct.executeQuery();
-                if(rs.next()){
-                    usados = usados + rs.getInt(1);
-                    while(rs.next()){
-                        System.out.println(rs.getInt(1));
-                        usados = usados + " - " + rs.getInt(1);
+                while(rs.next()){
+                    return Integer.toString(rs.getInt(1));
 
                     }
-                }
-                else{
-                    return "";
-                }
-                return usados;
+                return "";
             }catch(SQLException e){
                 System.out.println(e.getMessage());
             }
